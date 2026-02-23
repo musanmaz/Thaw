@@ -322,7 +322,13 @@ final class MenuBarSearchPanel: NSPanel {
     }
 
     override func cancelOperation(_: Any?) {
-        cancelEditing()
+        if model.editingItemTag != nil {
+            cancelEditing()
+        } else if model.searchText != "" {
+            model.searchText = ""
+        } else {
+            close()
+        }
     }
 
     @MainActor
