@@ -2699,13 +2699,16 @@ extension MenuBarItemManager {
         // Don't restore while suppressing relocations (first launch / reset).
         guard !suppressNextNewLeftmostItemRelocation else { return false }
 
-        // Only restore when the window ID set has changed, indicating items
-        // were recreated (app restart). When items are merely repositioned
-        // (user drag-and-drop), the IDs stay the same and we must not undo
-        // the user's arrangement.
+        // Only restore when previous window IDs have disappeared, indicating
+        // an app restarted (old windows destroyed, new ones created). During
+        // move operations macOS can briefly report duplicate windows for the
+        // same item, which adds transient IDs to the current set. Checking
+        // for removed IDs (rather than any set difference) avoids false
+        // positives from these duplicates and from user drag-and-drop, which
+        // only repositions existing windows without removing any.
         let currentWindowIDSet = Set(items.lazy.map(\.windowID))
         let previousWindowIDSet = Set(previousWindowIDs)
-        guard currentWindowIDSet != previousWindowIDSet else { return false }
+        guard !previousWindowIDSet.isSubset(of: currentWindowIDSet) else { return false }
 
         // Don't interfere with items that are currently temporarily shown.
         let activelyShownTags = Set(temporarilyShownItemContexts.map {
