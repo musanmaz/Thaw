@@ -2688,16 +2688,12 @@ extension MenuBarItemManager {
                 savedSectionForIdentifier[item.uniqueIdentifier] != nil
             guard !hasSavedSection else { return false }
 
-            // Only move items that are new to this section (window ID not seen before).
-            // Don't fall back to identity check when previousIDs is empty - that causes
-            // false positives where items already in visible section get moved.
-            let isNewID = !previousIDs.isEmpty && !previousIDs.contains(item.windowID)
-            guard isNewID else { return false }
-
+            let isNewIdentity = !knownItemIdentifiers.contains(identifier)
+            let isNewID = previousIDs.isEmpty ? isNewIdentity : !previousIDs.contains(item.windowID)
             let notPlacedHidden = !hiddenTags.contains(item.tag) && !alwaysHiddenTags.contains(item.tag)
             let bundle = bundleID(for: item)
             let notPinnedHidden = bundle.map { !pinnedHiddenBundleIDs.contains($0) && !pinnedAlwaysHiddenBundleIDs.contains($0) } ?? true
-            return notPlacedHidden && notPinnedHidden
+            return notPlacedHidden && notPinnedHidden && (isNewID || isNewIdentity)
         }
         guard let candidate else {
             if !leftmostItems.isEmpty && savedSectionForIdentifier.isEmpty == false {
