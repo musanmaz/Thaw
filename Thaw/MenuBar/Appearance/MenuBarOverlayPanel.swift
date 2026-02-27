@@ -505,7 +505,7 @@ final class MenuBarOverlayPanel: NSPanel {
         )
 
         alphaValue = 0
-        setFrame(newFrame, display: false)
+        setFrame(newFrame, display: true)
         orderFrontRegardless()
 
         updateFlags = [.applicationMenuFrame, .desktopWallpaper]
