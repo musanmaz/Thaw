@@ -3042,8 +3042,11 @@ extension MenuBarItemManager {
             guard item.tag.instanceIndex == 0 else { continue }
 
             // Skip apps with multiple icons (different names). Restoring causes errors.
+            // Exception: Control Center items (com.apple.controlcenter) which only
+            // appear one at a time and can be safely restored.
             let ns = item.tag.namespace.description
-            if let count = itemsPerNamespace[ns], count > 1 {
+            let isControlCenter = ns == "com.apple.controlcenter"
+            if let count = itemsPerNamespace[ns], count > 1 && !isControlCenter {
                 continue
             }
 
@@ -3188,9 +3191,12 @@ extension MenuBarItemManager {
             }
         }
 
-        // Skip if indexed or multi-icon apps are present. These naturally position
-        // themselves, and restoring order causes shuffling.
-        let hasMultiIconApps = itemsPerNamespace.values.contains { $0 > 1 }
+        // Skip if indexed or multi-icon apps are present (except Control Center).
+        // These naturally position themselves, and restoring order causes shuffling.
+        // Control Center items (com.apple.controlcenter) only appear one at a time
+        // and can be safely restored.
+        let multiIconNamespaces = itemsPerNamespace.filter { $0.key != "com.apple.controlcenter" && $0.value > 1 }
+        let hasMultiIconApps = !multiIconNamespaces.isEmpty
         guard !hasIndexedItems && !hasMultiIconApps else {
             MenuBarItemManager.diagLog.debug("restoreSavedItemOrder: skipping due to indexed/multi-icon items present")
             return false
