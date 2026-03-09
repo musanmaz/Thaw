@@ -7,7 +7,6 @@ Thaw is a powerful menu bar management tool. While its primary function is hidin
 
 ![thaw-banner](https://github.com/user-attachments/assets/9584065d-f840-4545-9a42-cfc5534b5ac3)
 
-
 [![Download](https://img.shields.io/badge/download-latest-brightgreen?style=flat-square)](https://github.com/stonerl/Thaw/releases/latest)
 [![CI](https://img.shields.io/github/actions/workflow/status/stonerl/Thaw/ci.yml?style=flat-square)](https://github.com/stonerl/Thaw/actions/workflows/ci.yml)
 ![Platform](https://img.shields.io/badge/platform-macOS-blue?style=flat-square)
@@ -139,13 +138,12 @@ Thaw is currently available in the following languages:
         <td align="center">🇳🇱/🇧🇪</td>
         <td><img src="https://geps.dev/progress/100" /></td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><b>日本語(*)</b></td>
+        <td>Complete</td>
+        <td align="center">🇯🇵</td>
+        <td><img src="https://geps.dev/progress/100" /></td>
     </tr>
 </table>
-
 
 _Note: languages marked with (\*) are currently only available in the development branch._
 
