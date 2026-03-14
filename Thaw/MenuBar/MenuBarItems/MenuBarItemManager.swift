@@ -3839,14 +3839,15 @@ extension MenuBarItemManager {
         try await resetLayoutToFreshState()
     }
 
-    /// Restores all items currently in hidden sections back to the visible section.
-    /// This is called when the app is terminating to prevent items from being stuck
-    /// in a "blocked" state in macOS's Control Center preferences.
+    /// Restores items that are stuck in a "blocked" state (positioned at x=-1)
+    /// back to the visible section. This is called when the app is terminating
+    /// to prevent items from being permanently stuck in macOS's Control Center preferences.
+    /// Only items at x=-1 are restored; normally hidden items are left as-is.
     ///
     /// - Returns: The number of items that failed to move.
     @MainActor
-    func restoreAllItemsToVisible() async -> Int {
-        MenuBarItemManager.diagLog.info("Restoring all hidden items to visible section before app termination")
+    func restoreBlockedItemsToVisible() async -> Int {
+        MenuBarItemManager.diagLog.info("Checking for blocked items (x=-1) to restore before app termination")
 
         guard let appState else {
             MenuBarItemManager.diagLog.error("Cannot restore items: missing appState")
@@ -3855,6 +3856,20 @@ extension MenuBarItemManager {
 
         // Get current items
         var items = await MenuBarItem.getMenuBarItems(option: .activeSpace)
+
+        // Find items that are blocked (at x=-1)
+        let blockedItems = items.filter { item in
+            guard item.isMovable, !item.isControlItem else { return false }
+            let bounds = Bridging.getWindowBounds(for: item.windowID) ?? item.bounds
+            return bounds.origin.x == -1
+        }
+
+        guard !blockedItems.isEmpty else {
+            MenuBarItemManager.diagLog.debug("No blocked items found - skipping restoration")
+            return 0
+        }
+
+        MenuBarItemManager.diagLog.warning("Found \(blockedItems.count) blocked items at x=-1, attempting to restore")
 
         // Get window IDs from ControlItem objects
         let hiddenWID: CGWindowID? = appState.menuBarManager
@@ -3871,39 +3886,8 @@ extension MenuBarItemManager {
             alwaysHiddenControlItemWindowID: alwaysHiddenWID
         ) else {
             MenuBarItemManager.diagLog.error("Cannot restore items: unable to find hidden control item")
-            return 0
+            return blockedItems.count
         }
-
-        // Get bounds of control items
-        let hiddenBounds = bestBounds(for: controlItems.hidden)
-        let alwaysHiddenBounds = controlItems.alwaysHidden.map { bestBounds(for: $0) }
-
-        // Identify items in hidden or always-hidden sections
-        let itemsToRestore = items.filter { item in
-            guard item.isMovable, !item.isControlItem, item.tag != .visibleControlItem else {
-                return false
-            }
-            let bounds = Bridging.getWindowBounds(for: item.windowID) ?? item.bounds
-
-            // Item is in hidden section (left of hidden control item)
-            if bounds.maxX <= hiddenBounds.minX {
-                return true
-            }
-
-            // Item is in always-hidden section (left of always-hidden control item, if exists)
-            if let ahBounds = alwaysHiddenBounds, bounds.maxX <= ahBounds.minX {
-                return true
-            }
-
-            return false
-        }
-
-        guard !itemsToRestore.isEmpty else {
-            MenuBarItemManager.diagLog.debug("No items to restore - all items already in visible section")
-            return 0
-        }
-
-        MenuBarItemManager.diagLog.info("Found \(itemsToRestore.count) items to restore to visible section")
 
         var failedMoves = 0
 
@@ -3912,8 +3896,8 @@ extension MenuBarItemManager {
             appState.hidEventManager.startAll()
         }
 
-        // Move items to the right of the hidden control item (visible section)
-        for item in itemsToRestore {
+        // Move blocked items to the right of the hidden control item (visible section)
+        for item in blockedItems {
             do {
                 try await move(
                     item: item,
@@ -3921,14 +3905,14 @@ extension MenuBarItemManager {
                     skipInputPause: true,
                     watchdogTimeout: Self.layoutWatchdogTimeout
                 )
-                MenuBarItemManager.diagLog.debug("Successfully restored \(item.logString) to visible section")
+                MenuBarItemManager.diagLog.info("Successfully restored blocked item \(item.logString) to visible section")
             } catch {
                 failedMoves += 1
-                MenuBarItemManager.diagLog.error("Failed to restore \(item.logString) to visible section: \(error)")
+                MenuBarItemManager.diagLog.error("Failed to restore blocked item \(item.logString): \(error)")
             }
         }
 
-        MenuBarItemManager.diagLog.info("Restore completed: \(itemsToRestore.count - failedMoves)/\(itemsToRestore.count) items restored successfully")
+        MenuBarItemManager.diagLog.info("Restore completed: \(blockedItems.count - failedMoves)/\(blockedItems.count) blocked items restored")
 
         // Give macOS a moment to settle
         try? await Task.sleep(for: .milliseconds(200))
