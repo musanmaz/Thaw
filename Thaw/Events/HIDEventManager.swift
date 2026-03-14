@@ -403,8 +403,6 @@ extension HIDEventManager {
     // MARK: Handle Show On Click
 
     private func handleShowOnClick(appState: AppState, screen: NSScreen, isDoubleClick: Bool = false) {
-        rebuildWindowBoundsLookup(from: appState.itemManager.itemCache)
-
         guard isMouseInsideEmptyMenuBarSpace(appState: appState, screen: screen) else {
             return
         }
