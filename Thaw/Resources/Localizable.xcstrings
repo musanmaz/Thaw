@@ -697,7 +697,7 @@
         },
         "id" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%1$@ sedang berjalan. Menjalankan beberapa pengelola bar menu secara bersamaan dapat menyebabkan masalah tampilan dan perilaku yang tidak terduga. Sebaiknya keluar dari %2$@ sebelum menggunakan Thaw."
           }
         },
