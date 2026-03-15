@@ -102,7 +102,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         Task {
             // Only restore items that are stuck at x=-1 (blocked state),
             // leaving normally hidden items in place
-            let restoredCount = await appState.itemManager.restoreBlockedItemsToVisible()
+            _ = await appState.itemManager.restoreBlockedItemsToVisible()
             semaphore.signal()
         }
 
