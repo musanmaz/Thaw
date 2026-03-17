@@ -4224,7 +4224,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "箭头"
+            "value" : "方向箭头"
           }
         },
         "zh-Hant" : {
@@ -5944,7 +5944,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "请您检查系统设置>菜单栏并且启动%@"
+            "value" : "请在 系统设置 > 菜单栏 中启用 %@"
           }
         },
         "zh-Hant" : {
@@ -6147,7 +6147,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "箭头"
+            "value" : "V 形箭头"
           }
         },
         "zh-Hant" : {
@@ -6242,7 +6242,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "下箭头"
+            "value" : "V 形箭头（向下）"
           }
         },
         "zh-Hant" : {
@@ -7022,7 +7022,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "仍然继续"
+            "value" : "仍要继续"
           }
         },
         "zh-Hant" : {
@@ -8936,7 +8936,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "拖动即可将菜单栏项目排列成不同的部分。"
+            "value" : "拖动菜单栏项目将其整理到不同的区域。"
           }
         },
         "zh-Hant" : {
@@ -9038,7 +9038,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "由于该应用的早期版本存在错误，菜单栏部分的数据已损坏，必须重置。"
+            "value" : "由于早期版本的漏洞，%@ 菜单栏部分数据已损坏，必须重置。"
           }
         },
         "zh-Hant" : {
@@ -9944,7 +9944,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "启用永久隐藏区域"
+            "value" : "启用始终隐藏区域"
           }
         },
         "zh-Hant" : {
@@ -10658,7 +10658,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "渐层"
+            "value" : "渐变"
           }
         },
         "zh-Hant" : {
@@ -11372,7 +11372,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "此热键被macOS保留"
+            "value" : "此热键被 macOS 占用"
           }
         },
         "zh-Hant" : {
@@ -12786,7 +12786,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "左侧端盖"
+            "value" : "左侧端头样式"
           }
         },
         "zh-Hant" : {
@@ -14205,7 +14205,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用智能算法重新隐藏菜单栏项目。"
+            "value" : "使用智能算法自动隐藏菜单栏项目。"
           }
         },
         "zh-Hant" : {
@@ -14307,7 +14307,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "当焦点应用切换时，菜单栏项目将被重新隐藏。"
+            "value" : "当焦点应用切换时，菜单栏项目将被自动隐藏。"
           }
         },
         "zh-Hant" : {
@@ -16935,7 +16935,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "报告一个Bug"
+            "value" : "反馈Bug"
           }
         },
         "zh-Hant" : {
@@ -17495,7 +17495,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重置完成，但仍有 %lld 个项目无法移动。如有需要请重试， 请检查菜单栏。"
+            "value" : "重置完成，但仍有 %lld 个项目无法移动。如有必要，请检查菜单栏并重试。"
           }
         },
         "zh-Hant" : {
@@ -18413,7 +18413,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "单击鼠标右键"
+            "value" : "右键单击"
           }
         },
         "zh-Hant" : {
@@ -18712,7 +18712,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "圆角端盖"
+            "value" : "圆头"
           }
         },
         "zh-Hant" : {
@@ -21908,7 +21908,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "方角端盖"
+            "value" : "方头"
           }
         },
         "zh-Hant" : {
@@ -24217,7 +24217,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "右侧端盖"
+            "value" : "右侧端头样式"
           }
         },
         "zh-Hant" : {
@@ -24727,7 +24727,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用 %@ 列"
+            "value" : "使用 %@ 栏"
           }
         },
         "zh-Hant" : {
