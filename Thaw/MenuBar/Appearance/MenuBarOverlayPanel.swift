@@ -166,9 +166,18 @@ final class MenuBarOverlayPanel: NSPanel {
             backing: .buffered,
             defer: false
         )
-        self.level = appState.appearanceManager.configuration.showsMenuBarBackground
-            ? NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.statusWindow)) - 1)
-            : .statusBar
+
+        /*
+         Idealy we would move it down one level, so the icons and app menu text is not tinted.
+         But that for some reason this fails to draw the OverlayPanel on startup at the correct
+         level entirely. so we Draw it at statusBar level for now.
+
+         self.level = appState.appearanceManager.configuration.showsMenuBarBackground
+             ? NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.statusWindow)) - 1)
+             : .statusBar
+          */
+
+        self.level = .statusBar
         self.title = String(localized: "Menu Bar Overlay")
         self.backgroundColor = .clear
         self.hasShadow = false
